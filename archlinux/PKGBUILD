@@ -1,0 +1,39 @@
+pkgname=python-pokerstove-git
+pkgver=r209.da500ca
+pkgrel=1
+pkgdesc="Python bindings for a highly optimized C++ poker hand evaluation tool"
+arch=('any')
+url="https://github.com/andrewprock/pokerstove"
+license=('custom')
+depends=('boost-libs')
+makedepends=('cmake' 'gtest' 'swig')
+optdepends=()
+provides=('python-pokerstove')
+#source=($pkgname::git+https://github.com/andrewprock/pokerstove.git)
+source=($pkgname::git+https://github.com/SKZ81/pokerstove.git#branch=skz81)
+sha256sums=('SKIP')
+
+pkgver() {
+    cd "$srcdir/$pkgname"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+    cd $pkgname
+    mkdir -p build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON=ON ..
+    make
+}
+
+package() {
+    cd $pkgname
+
+    install -D -m755 "$srcdir/$pkgname/build/bin/ps-eval" "$pkgdir/usr/bin/ps-eval"
+    install -D -m755 "$srcdir/$pkgname/build/bin/ps-colex" "$pkgdir/usr/bin/ps-colex"
+    install -D -m644 "$srcdir/$pkgname/LICENSE.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE.txt"
+
+    local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
+    install -D -m644 "$srcdir/$pkgname/build/src/lib/python/CMakeFiles/pokerstove.dir/pokerstove.files/pokerstove.py" "$pkgdir/$site_packages/pokerstove/__init__.py"
+    install -D -m644 "$srcdir/$pkgname/build/python/pokerstove/_pokerstove.so" "$pkgdir/$site_packages/pokerstove/_pokerstove.so"
+}
