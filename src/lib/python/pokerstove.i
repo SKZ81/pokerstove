@@ -30,11 +30,13 @@
 #include "pokerstove/peval/Holdem.h"
 #include "pokerstove/penum/SimpleDeck.hpp"
 #include "pokerstove/penum/CardDistribution.h"
+#include "pokerstove/penum/ShowdownEnumerator.h"
 %}
 
 %template(CardVector) std::vector<pokerstove::Card>;
-%template(PokerEvaluationVector) std::vector<pokerstove::PokerEvaluation>;
 %template(CardSetVector) std::vector<pokerstove::CardSet>;
+%template(CardDistributionVector) std::vector<pokerstove::CardDistribution>;
+%template(PokerEvaluationVector) std::vector<pokerstove::PokerEvaluation>;
 %template(PokerHandEvaluationVector) std::vector<pokerstove::PokerHandEvaluation>;
 %template(EquityResultVector) std::vector<pokerstove::EquityResult>;
 
@@ -54,6 +56,7 @@
 %include "pokerstove/peval/Holdem.h"
 %include "pokerstove/penum/SimpleDeck.hpp"
 %include "pokerstove/penum/CardDistribution.h"
+%include "pokerstove/penum/ShowdownEnumerator.h"
 
 
 // support __repr__() with extension boilerplate
