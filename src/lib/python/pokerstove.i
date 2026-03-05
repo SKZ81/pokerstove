@@ -34,6 +34,9 @@
 
 %template(CardVector) std::vector<pokerstove::Card>;
 %template(PokerEvaluationVector) std::vector<pokerstove::PokerEvaluation>;
+%template(CardSetVector) std::vector<pokerstove::CardSet>;
+%template(PokerHandEvaluationVector) std::vector<pokerstove::PokerHandEvaluation>;
+%template(EquityResultVector) std::vector<pokerstove::EquityResult>;
 
 // take care of some shared pointer issues
 %include <std_shared_ptr.i>
